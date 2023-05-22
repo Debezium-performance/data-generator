@@ -2,7 +2,8 @@ package io.debezium.perf.load.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.debezium.perf.load.data.scenarios.ScenarioBuilder;
+import io.debezium.perf.load.data.scenarios.ScenarioRequestExecutor;
+import io.debezium.perf.load.data.scenarios.builder.ScenarioBuilder;
 import io.debezium.perf.load.json.DmtSchema;
 
 import java.net.URI;
@@ -64,6 +65,12 @@ public class RequestBuilder<T extends DataBuilder, G extends ScenarioBuilder> {
         List<DmtSchema> payloads = dataBuilder.addRequests(maximalRowCount, requestCount).build();
         List<HttpRequest> requests = this.generateRequests(payloads, rate);
         scenarioBuilder.prepareScenario(requests).run();
+    }
+
+    public ScenarioRequestExecutor buildScenario(int rate) throws URISyntaxException, JsonProcessingException {
+        List<DmtSchema> payloads = dataBuilder.addRequests(maximalRowCount, requestCount).build();
+        List<HttpRequest> requests = this.generateRequests(payloads, rate);
+        return scenarioBuilder.prepareScenario(requests);
     }
 
     public List<HttpRequest> build(int rate) throws URISyntaxException, JsonProcessingException {
