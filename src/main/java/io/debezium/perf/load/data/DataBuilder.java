@@ -21,7 +21,7 @@ public interface DataBuilder {
                 DataTypeConvertor.convertDataType(value), value.toString()));
     }
 
-    default <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random){
+    default <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random) {
         int x = random.nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }

@@ -23,7 +23,7 @@ public class DmtSchema {
 
     public DmtSchema() {
         // Default
-        this.databases = Arrays.asList("MySQL"/*, "PostgreSQL", "MongoDB"*/);
+        this.databases = List.of("MySQL"/*, "PostgreSQL", "MongoDB"*/);
         this.payload = new ArrayList<>();
     }
 

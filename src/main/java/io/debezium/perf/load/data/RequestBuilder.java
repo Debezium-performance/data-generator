@@ -2,10 +2,8 @@ package io.debezium.perf.load.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.debezium.perf.load.data.scenarios.ScenarioExecutor;
+import io.debezium.perf.load.data.scenarios.ScenarioBuilder;
 import io.debezium.perf.load.json.DmtSchema;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,20 +13,18 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestBuilder<T extends DataBuilder, G extends ScenarioExecutor> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestBuilder.class);
+public class RequestBuilder<T extends DataBuilder, G extends ScenarioBuilder> {
     private String endpoint;
-    private T dataBuilder;
+    private final T dataBuilder;
 
-    private G executor;
-    private int port;
+    private final G scenarioBuilder;
     private Integer maximalRowCount;
     private int requestCount;
 
 
-    public RequestBuilder(T dataBuilder, G executor) {
+    public RequestBuilder(T dataBuilder, G scenarioBuilder) {
         this.dataBuilder = dataBuilder;
-        this.executor = executor;
+        this.scenarioBuilder = scenarioBuilder;
     }
 
     public RequestBuilder<T, G> setEndpoint(String endpoint) {
@@ -36,10 +32,6 @@ public class RequestBuilder<T extends DataBuilder, G extends ScenarioExecutor> {
         return this;
     }
 
-    public RequestBuilder<T, G> setPort(int port) {
-        this.port = port;
-        return this;
-    }
 
     public RequestBuilder<T, G> setMaxRows(Integer maximalRowCount) {
         this.maximalRowCount = maximalRowCount;
@@ -53,7 +45,7 @@ public class RequestBuilder<T extends DataBuilder, G extends ScenarioExecutor> {
 
     private List<HttpRequest> generateRequests(List<DmtSchema> payloads, int rate) throws URISyntaxException, JsonProcessingException {
         List<HttpRequest> requests = new ArrayList<>();
-        for (DmtSchema schema: payloads) {
+        for (DmtSchema schema : payloads) {
 
             String serializedRequest = new ObjectMapper().writeValueAsString(schema);
 
@@ -71,7 +63,7 @@ public class RequestBuilder<T extends DataBuilder, G extends ScenarioExecutor> {
     public void buildAndExecute(int rate) throws URISyntaxException, JsonProcessingException {
         List<DmtSchema> payloads = dataBuilder.addRequests(maximalRowCount, requestCount).build();
         List<HttpRequest> requests = this.generateRequests(payloads, rate);
-        executor.executeScenario(requests);
+        scenarioBuilder.prepareScenario(requests).run();
     }
 
     public List<HttpRequest> build(int rate) throws URISyntaxException, JsonProcessingException {

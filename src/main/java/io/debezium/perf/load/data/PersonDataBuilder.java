@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class PersonDataBuilder implements DataBuilder {
     private static final Random RANDOM = new SecureRandom();
-    Faker dataFaker = new Faker();
     private static final Tables TABLE = Tables.SPORT;
+    Faker dataFaker = new Faker();
     List<DmtSchema> requests;
 
     public PersonDataBuilder() {
