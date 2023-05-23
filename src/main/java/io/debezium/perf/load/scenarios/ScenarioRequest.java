@@ -1,4 +1,4 @@
-package io.debezium.perf.load.data.scenarios;
+package io.debezium.perf.load.scenarios;
 
 import java.net.http.HttpRequest;
 import java.util.List;

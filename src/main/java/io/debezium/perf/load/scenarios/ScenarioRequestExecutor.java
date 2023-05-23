@@ -1,4 +1,4 @@
-package io.debezium.perf.load.data.scenarios;
+package io.debezium.perf.load.scenarios;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,5 +59,9 @@ public class ScenarioRequestExecutor implements Runnable {
             });
             requests.clear();
         }
+    }
+
+    public List<ScenarioRequest> getRequestScenario() {
+        return requestScenario;
     }
 }

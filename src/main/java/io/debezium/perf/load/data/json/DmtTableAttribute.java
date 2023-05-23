@@ -1,4 +1,4 @@
-package io.debezium.perf.load.json;
+package io.debezium.perf.load.data.json;
 
 public class DmtTableAttribute {
     String name;

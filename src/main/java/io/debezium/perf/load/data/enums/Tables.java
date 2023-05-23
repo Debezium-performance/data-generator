@@ -4,6 +4,6 @@ public enum Tables {
     PERSON,
     ADDRESS,
     FOOD,
-    SPORT,
-    SERIES
+    AVIATION,
+    BEER
 }
