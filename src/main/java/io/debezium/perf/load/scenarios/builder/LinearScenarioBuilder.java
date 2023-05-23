@@ -1,7 +1,7 @@
-package io.debezium.perf.load.data.scenarios.builder;
+package io.debezium.perf.load.scenarios.builder;
 
-import io.debezium.perf.load.data.scenarios.ScenarioRequest;
-import io.debezium.perf.load.data.scenarios.ScenarioRequestExecutor;
+import io.debezium.perf.load.scenarios.ScenarioRequest;
+import io.debezium.perf.load.scenarios.ScenarioRequestExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

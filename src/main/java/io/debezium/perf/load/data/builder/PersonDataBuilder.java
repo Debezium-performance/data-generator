@@ -1,27 +1,21 @@
-package io.debezium.perf.load.data;
+package io.debezium.perf.load.data.builder;
 
+import io.debezium.perf.load.data.DataTypeConvertor;
 import io.debezium.perf.load.data.enums.Tables;
-import io.debezium.perf.load.json.DmtSchema;
-import io.debezium.perf.load.json.DmtTableAttribute;
-import net.datafaker.Faker;
+import io.debezium.perf.load.data.json.DmtSchema;
+import io.debezium.perf.load.data.json.DmtTableAttribute;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-public class PersonDataBuilder implements DataBuilder {
-    private static final Random RANDOM = new SecureRandom();
-    private static final Tables TABLE = Tables.SPORT;
-    Faker dataFaker = new Faker();
-    List<DmtSchema> requests;
+public class PersonDataBuilder extends DataBuilder {
 
     public PersonDataBuilder() {
-        this.requests = new ArrayList<>();
+        super();
+        super.table = Tables.PERSON;
     }
 
     @Override
-    public DmtSchema generateDataRow(Integer idPool, Tables table) {
+    public DmtSchema generateDataRow(Integer idPool) {
         DmtSchema schema = new DmtSchema();
         createId(schema, RANDOM.nextInt(idPool));
         schema.setTable(table.toString().toLowerCase());
@@ -60,18 +54,5 @@ public class PersonDataBuilder implements DataBuilder {
 
         schema.normalise();
         return schema;
-    }
-
-    @Override
-    public DataBuilder addRequests(Integer idPool, int count) {
-        for (int i = 0; i < count; i++) {
-            this.requests.add(this.generateDataRow(idPool, TABLE));
-        }
-        return this;
-    }
-
-    @Override
-    public List<DmtSchema> build() {
-        return this.requests;
     }
 }

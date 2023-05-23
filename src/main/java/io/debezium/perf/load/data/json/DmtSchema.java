@@ -1,7 +1,6 @@
-package io.debezium.perf.load.json;
+package io.debezium.perf.load.data.json;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DmtSchema {
