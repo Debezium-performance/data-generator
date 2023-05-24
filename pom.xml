@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.debezium</groupId>
     <artifactId>perf-load-generator</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <name>perf-data-generator</name>
     <description>Data generator for performance testing debezium connectors</description>
     <properties>
