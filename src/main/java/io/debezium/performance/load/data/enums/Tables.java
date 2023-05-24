@@ -1,4 +1,4 @@
-package io.debezium.perf.load.data.enums;
+package io.debezium.performance.load.data.enums;
 
 public enum Tables {
     PERSON,

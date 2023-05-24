@@ -1,4 +1,4 @@
-package io.debezium.perf.load.data.json;
+package io.debezium.performance.load.data.json;
 
 import java.util.ArrayList;
 import java.util.List;

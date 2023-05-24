@@ -1,13 +1,9 @@
-package io.debezium.perf.load.data.builder;
+package io.debezium.performance.load.data.builder;
 
-import io.debezium.perf.load.data.DataTypeConvertor;
-import io.debezium.perf.load.data.enums.Tables;
-import io.debezium.perf.load.data.json.DmtSchema;
-import io.debezium.perf.load.data.json.DmtTableAttribute;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import io.debezium.performance.load.data.DataTypeConvertor;
+import io.debezium.performance.load.data.enums.Tables;
+import io.debezium.performance.load.data.json.DmtSchema;
+import io.debezium.performance.load.data.json.DmtTableAttribute;
 
 public class FoodDataBuilder extends DataBuilder{
 

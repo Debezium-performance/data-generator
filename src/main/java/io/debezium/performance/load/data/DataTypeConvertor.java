@@ -1,4 +1,4 @@
-package io.debezium.perf.load.data;
+package io.debezium.performance.load.data;
 
 public class DataTypeConvertor {
 

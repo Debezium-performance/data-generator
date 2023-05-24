@@ -1,4 +1,4 @@
-package io.debezium.perf.load.graph;
+package io.debezium.performance.load.graph;
 
 import com.indvd00m.ascii.render.Point;
 import com.indvd00m.ascii.render.Region;
@@ -14,8 +14,8 @@ import com.indvd00m.ascii.render.elements.plot.api.AxisType;
 import com.indvd00m.ascii.render.elements.plot.api.IPlotPoint;
 import com.indvd00m.ascii.render.elements.plot.misc.AxisLabel;
 import com.indvd00m.ascii.render.elements.plot.misc.PlotPoint;
-import io.debezium.perf.load.scenarios.ScenarioRequest;
-import io.debezium.perf.load.scenarios.ScenarioRequestExecutor;
+import io.debezium.performance.load.scenarios.ScenarioRequest;
+import io.debezium.performance.load.scenarios.ScenarioRequestExecutor;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

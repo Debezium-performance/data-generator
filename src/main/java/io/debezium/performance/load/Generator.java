@@ -1,11 +1,11 @@
-package io.debezium.perf.load;
+package io.debezium.performance.load;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.debezium.perf.load.data.builder.PersonDataBuilder;
-import io.debezium.perf.load.data.builder.RequestBuilder;
-import io.debezium.perf.load.graph.GraphVisualisation;
-import io.debezium.perf.load.scenarios.ScenarioRequestExecutor;
-import io.debezium.perf.load.scenarios.builder.PeakScenarioBuilder;
+import io.debezium.performance.load.data.builder.PersonDataBuilder;
+import io.debezium.performance.load.data.builder.RequestBuilder;
+import io.debezium.performance.load.graph.GraphVisualisation;
+import io.debezium.performance.load.scenarios.ScenarioRequestExecutor;
+import io.debezium.performance.load.scenarios.builder.PeakScenarioBuilder;
 
 import java.net.URISyntaxException;
 

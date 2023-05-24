@@ -1,10 +1,10 @@
-package io.debezium.perf.load.data.builder;
+package io.debezium.performance.load.data.builder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.debezium.perf.load.scenarios.ScenarioRequestExecutor;
-import io.debezium.perf.load.scenarios.builder.ScenarioBuilder;
-import io.debezium.perf.load.data.json.DmtSchema;
+import io.debezium.performance.load.scenarios.ScenarioRequestExecutor;
+import io.debezium.performance.load.scenarios.builder.ScenarioBuilder;
+import io.debezium.performance.load.data.json.DmtSchema;
 
 import java.net.URI;
 import java.net.URISyntaxException;

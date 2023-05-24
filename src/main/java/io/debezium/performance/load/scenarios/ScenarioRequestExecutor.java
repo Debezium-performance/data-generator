@@ -1,4 +1,4 @@
-package io.debezium.perf.load.scenarios;
+package io.debezium.performance.load.scenarios;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
