@@ -85,7 +85,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/debezium-performance/data-generator</url>
+            <url>https://maven.pkg.github.com/Debezium-performance/data-generator</url>
         </repository>
     </distributionManagement>
 </project>
