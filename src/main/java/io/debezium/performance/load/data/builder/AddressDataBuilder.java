@@ -1,14 +1,9 @@
-package io.debezium.perf.load.data.builder;
+package io.debezium.performance.load.data.builder;
 
-import io.debezium.perf.load.data.DataTypeConvertor;
-import io.debezium.perf.load.data.enums.Tables;
-import io.debezium.perf.load.data.json.DmtSchema;
-import io.debezium.perf.load.data.json.DmtTableAttribute;
-import net.datafaker.Faker;
-
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.Random;
+import io.debezium.performance.load.data.DataTypeConvertor;
+import io.debezium.performance.load.data.enums.Tables;
+import io.debezium.performance.load.data.json.DmtSchema;
+import io.debezium.performance.load.data.json.DmtTableAttribute;
 
 public class AddressDataBuilder extends DataBuilder {
 
