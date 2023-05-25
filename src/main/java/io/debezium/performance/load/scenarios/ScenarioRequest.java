@@ -4,10 +4,9 @@ import java.net.http.HttpRequest;
 import java.util.List;
 
 public class ScenarioRequest {
+    private final int batchSize;
     private List<HttpRequest> requests;
     private Runnable wait;
-
-    private final int batchSize;
 
     public ScenarioRequest(List<HttpRequest> requests, Runnable wait) {
         this.requests = requests;

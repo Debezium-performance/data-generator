@@ -1,9 +1,12 @@
 package io.debezium.performance.load.data.builder;
 
+import io.debezium.performance.dmt.schema.DatabaseColumnEntry;
+import io.debezium.performance.dmt.schema.DatabaseEntry;
+import io.debezium.performance.dmt.schema.DatabaseTable;
 import io.debezium.performance.load.data.DataTypeConvertor;
 import io.debezium.performance.load.data.enums.Tables;
-import io.debezium.performance.load.data.json.DmtSchema;
-import io.debezium.performance.load.data.json.DmtTableAttribute;
+
+import java.util.ArrayList;
 
 public class BeerDataBuilder extends DataBuilder {
 
@@ -13,10 +16,10 @@ public class BeerDataBuilder extends DataBuilder {
     }
 
     @Override
-    public DmtSchema generateDataRow(Integer idPool) {
-        DmtSchema schema = new DmtSchema();
+    public DatabaseEntry generateDataRow(Integer idPool) {
+        DatabaseEntry schema = new DatabaseEntry(new ArrayList<>(), new DatabaseTable());
         createId(schema, RANDOM.nextInt(idPool));
-        schema.setTable(table.toString().toLowerCase());
+        schema.getDatabaseTable().setName(table.toString().toLowerCase());
         //schema.setOperation(randomEnum(Operations.class, RANDOM).toString().toLowerCase());
 
 
@@ -27,25 +30,25 @@ public class BeerDataBuilder extends DataBuilder {
         String yeast = dataFaker.beer().yeast();
         String style = dataFaker.beer().style();
 
-        schema.getPayload().add(new DmtTableAttribute("name",
-                DataTypeConvertor.convertDataType(name), name));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(name, "name",
+                DataTypeConvertor.convertDataType(name)));
 
-        schema.getPayload().add(new DmtTableAttribute("brand",
-                DataTypeConvertor.convertDataType(brand), brand));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(brand, "brand",
+                DataTypeConvertor.convertDataType(brand)));
 
-        schema.getPayload().add(new DmtTableAttribute("hop",
-                DataTypeConvertor.convertDataType(hop), hop));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(hop, "hop",
+                DataTypeConvertor.convertDataType(hop)));
 
-        schema.getPayload().add(new DmtTableAttribute("malt",
-                DataTypeConvertor.convertDataType(malt), malt));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(malt, "malt",
+                DataTypeConvertor.convertDataType(malt)));
 
-        schema.getPayload().add(new DmtTableAttribute("yeast",
-                DataTypeConvertor.convertDataType(yeast), yeast));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(yeast, "yeast",
+                DataTypeConvertor.convertDataType(yeast)));
 
-        schema.getPayload().add(new DmtTableAttribute("style",
-                DataTypeConvertor.convertDataType(style), style));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(style, "style",
+                DataTypeConvertor.convertDataType(style)));
 
-        schema.normalise();
+        normalise(schema);
         return schema;
     }
 }

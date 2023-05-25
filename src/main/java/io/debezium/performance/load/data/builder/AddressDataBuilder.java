@@ -1,9 +1,12 @@
 package io.debezium.performance.load.data.builder;
 
+import io.debezium.performance.dmt.schema.DatabaseColumnEntry;
+import io.debezium.performance.dmt.schema.DatabaseEntry;
+import io.debezium.performance.dmt.schema.DatabaseTable;
 import io.debezium.performance.load.data.DataTypeConvertor;
 import io.debezium.performance.load.data.enums.Tables;
-import io.debezium.performance.load.data.json.DmtSchema;
-import io.debezium.performance.load.data.json.DmtTableAttribute;
+
+import java.util.ArrayList;
 
 public class AddressDataBuilder extends DataBuilder {
 
@@ -13,10 +16,10 @@ public class AddressDataBuilder extends DataBuilder {
     }
 
     @Override
-    public DmtSchema generateDataRow(Integer idPool) {
-        DmtSchema schema = new DmtSchema();
+    public DatabaseEntry generateDataRow(Integer idPool) {
+        DatabaseEntry schema = new DatabaseEntry(new ArrayList<>(), new DatabaseTable());
         createId(schema, RANDOM.nextInt(idPool));
-        schema.setTable(table.toString().toLowerCase());
+        schema.getDatabaseTable().setName(table.toString().toLowerCase());
         //schema.setOperation(randomEnum(Operations.class, RANDOM).toString().toLowerCase());
 
         String city = dataFaker.address().cityName();
@@ -29,31 +32,31 @@ public class AddressDataBuilder extends DataBuilder {
         Double longtitude = Double.valueOf(dataFaker.address().longitude());
 
 
-        schema.getPayload().add(new DmtTableAttribute("city",
-                DataTypeConvertor.convertDataType(city), city));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(city, "city",
+                DataTypeConvertor.convertDataType(city)));
 
-        schema.getPayload().add(new DmtTableAttribute("city_prefix",
-                DataTypeConvertor.convertDataType(cityPref), cityPref));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(cityPref, "city_prefix",
+                DataTypeConvertor.convertDataType(cityPref)));
 
-        schema.getPayload().add(new DmtTableAttribute("street",
-                DataTypeConvertor.convertDataType(street), street));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(street, "street",
+                DataTypeConvertor.convertDataType(street)));
 
-        schema.getPayload().add(new DmtTableAttribute("street_number",
-                DataTypeConvertor.convertDataType(streetNumber), streetNumber.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(streetNumber.toString(), "street_number",
+                DataTypeConvertor.convertDataType(streetNumber)));
 
-        schema.getPayload().add(new DmtTableAttribute("zip_code",
-                DataTypeConvertor.convertDataType(zipCode), zipCode));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(zipCode, "zip_code",
+                DataTypeConvertor.convertDataType(zipCode)));
 
-        schema.getPayload().add(new DmtTableAttribute("floor",
-                DataTypeConvertor.convertDataType(floor), floor.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(floor.toString(), "floor",
+                DataTypeConvertor.convertDataType(floor)));
 
-        schema.getPayload().add(new DmtTableAttribute("latitude",
-                DataTypeConvertor.convertDataType(latitude), latitude.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(latitude.toString(), "latitude",
+                DataTypeConvertor.convertDataType(latitude)));
 
-        schema.getPayload().add(new DmtTableAttribute("longtitude",
-                DataTypeConvertor.convertDataType(longtitude), longtitude.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(longtitude.toString(), "longtitude",
+                DataTypeConvertor.convertDataType(longtitude)));
 
-        schema.normalise();
+        normalise(schema);
         return schema;
     }
 }

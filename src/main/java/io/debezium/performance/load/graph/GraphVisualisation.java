@@ -17,8 +17,6 @@ import com.indvd00m.ascii.render.elements.plot.misc.PlotPoint;
 import io.debezium.performance.load.scenarios.ScenarioRequest;
 import io.debezium.performance.load.scenarios.ScenarioRequestExecutor;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +44,8 @@ public class GraphVisualisation {
 
         builder.element(new Axis(points, new Region(12, 0, roundCount, maxHeight + 4)));
         builder.element(new AxisLabels(points, new Region(12, 0, roundCount, maxHeight + 4)));
-        builder.element(new AxisLabel("Requests", 2, 2, AxisType.Y, new Point(0,0)));
-        builder.element(new AxisLabel("Rate step", roundCount - 2, maxHeight + 4, AxisType.X, new Point(0,0)));
+        builder.element(new AxisLabel("Requests", 2, 2, AxisType.Y, new Point(0, 0)));
+        builder.element(new AxisLabel("Rate step", roundCount - 2, maxHeight + 4, AxisType.X, new Point(0, 0)));
         builder.element(new Plot(points, new Region(12, 0, roundCount + 10, maxHeight + 4)));
 
         ICanvas canvas = render.render(builder.build());
