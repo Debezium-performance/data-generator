@@ -1,9 +1,12 @@
 package io.debezium.performance.load.data.builder;
 
+import io.debezium.performance.dmt.schema.DatabaseColumnEntry;
+import io.debezium.performance.dmt.schema.DatabaseEntry;
+import io.debezium.performance.dmt.schema.DatabaseTable;
 import io.debezium.performance.load.data.DataTypeConvertor;
 import io.debezium.performance.load.data.enums.Tables;
-import io.debezium.performance.load.data.json.DmtSchema;
-import io.debezium.performance.load.data.json.DmtTableAttribute;
+
+import java.util.ArrayList;
 
 public class PersonDataBuilder extends DataBuilder {
 
@@ -13,10 +16,10 @@ public class PersonDataBuilder extends DataBuilder {
     }
 
     @Override
-    public DmtSchema generateDataRow(Integer idPool) {
-        DmtSchema schema = new DmtSchema();
+    public DatabaseEntry generateDataRow(Integer idPool) {
+        DatabaseEntry schema = new DatabaseEntry(new ArrayList<>(), new DatabaseTable());
         createId(schema, RANDOM.nextInt(idPool));
-        schema.setTable(table.toString().toLowerCase());
+        schema.getDatabaseTable().setName(table.toString().toLowerCase());
         //schema.setOperation(randomEnum(Operations.class, RANDOM).toString().toLowerCase());
 
         String firstName = dataFaker.name().firstName();
@@ -29,28 +32,28 @@ public class PersonDataBuilder extends DataBuilder {
         String company = dataFaker.company().name();
         String color = dataFaker.color().name();
 
-        schema.getPayload().add(new DmtTableAttribute("name",
-                DataTypeConvertor.convertDataType(firstName), firstName));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(firstName, "name",
+                DataTypeConvertor.convertDataType(firstName)));
 
-        schema.getPayload().add(new DmtTableAttribute("lastname",
-                DataTypeConvertor.convertDataType(lastName), lastName));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(lastName, "lastname",
+                DataTypeConvertor.convertDataType(lastName)));
 
-        schema.getPayload().add(new DmtTableAttribute("age",
-                DataTypeConvertor.convertDataType(age), age.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(age.toString(), "age",
+                DataTypeConvertor.convertDataType(age)));
 
-        schema.getPayload().add(new DmtTableAttribute("computeraverage",
-                DataTypeConvertor.convertDataType(avg), avg.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(avg.toString(), "computeraverage",
+                DataTypeConvertor.convertDataType(avg)));
 
-        schema.getPayload().add(new DmtTableAttribute("city",
-                DataTypeConvertor.convertDataType(city), city));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(city, "city",
+                DataTypeConvertor.convertDataType(city)));
 
-        schema.getPayload().add(new DmtTableAttribute("company",
-                DataTypeConvertor.convertDataType(company), company));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(company, "company",
+                DataTypeConvertor.convertDataType(company)));
 
-        schema.getPayload().add(new DmtTableAttribute("favouritecolor",
-                DataTypeConvertor.convertDataType(color), color));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(color, "favouritecolor",
+                DataTypeConvertor.convertDataType(color)));
 
-        schema.normalise();
+        normalise(schema);
         return schema;
     }
 }

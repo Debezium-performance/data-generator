@@ -1,9 +1,12 @@
 package io.debezium.performance.load.data.builder;
 
+import io.debezium.performance.dmt.schema.DatabaseColumnEntry;
+import io.debezium.performance.dmt.schema.DatabaseEntry;
+import io.debezium.performance.dmt.schema.DatabaseTable;
 import io.debezium.performance.load.data.DataTypeConvertor;
 import io.debezium.performance.load.data.enums.Tables;
-import io.debezium.performance.load.data.json.DmtSchema;
-import io.debezium.performance.load.data.json.DmtTableAttribute;
+
+import java.util.ArrayList;
 
 public class AviationDataBuilder extends DataBuilder {
 
@@ -13,10 +16,10 @@ public class AviationDataBuilder extends DataBuilder {
     }
 
     @Override
-    public DmtSchema generateDataRow(Integer idPool) {
-        DmtSchema schema = new DmtSchema();
+    public DatabaseEntry generateDataRow(Integer idPool) {
+        DatabaseEntry schema = new DatabaseEntry(new ArrayList<>(), new DatabaseTable());
         createId(schema, RANDOM.nextInt(idPool));
-        schema.setTable(table.toString().toLowerCase());
+        schema.getDatabaseTable().setName(table.toString().toLowerCase());
         //schema.setOperation(randomEnum(Operations.class, RANDOM).toString().toLowerCase());
 
 
@@ -29,29 +32,28 @@ public class AviationDataBuilder extends DataBuilder {
         Double flightDistance = RANDOM.nextDouble(4000.0);
 
 
+        schema.getColumnEntries().add(new DatabaseColumnEntry(aircraft, "aircraft",
+                DataTypeConvertor.convertDataType(aircraft)));
 
-        schema.getPayload().add(new DmtTableAttribute("aircraft",
-                DataTypeConvertor.convertDataType(aircraft), aircraft));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(airline, "airline",
+                DataTypeConvertor.convertDataType(airline)));
 
-        schema.getPayload().add(new DmtTableAttribute("airline",
-                DataTypeConvertor.convertDataType(airline), airline));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(passengers.toString(), "passengers",
+                DataTypeConvertor.convertDataType(passengers)));
 
-        schema.getPayload().add(new DmtTableAttribute("passengers",
-                DataTypeConvertor.convertDataType(passengers), passengers.toString()));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(airport, "airport",
+                DataTypeConvertor.convertDataType(airport)));
 
-        schema.getPayload().add(new DmtTableAttribute("airport",
-                DataTypeConvertor.convertDataType(airport), airport));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(flight, "flight",
+                DataTypeConvertor.convertDataType(flight)));
 
-        schema.getPayload().add(new DmtTableAttribute("flight",
-                DataTypeConvertor.convertDataType(flight), flight));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(metar, "metar",
+                DataTypeConvertor.convertDataType(metar)));
 
-        schema.getPayload().add(new DmtTableAttribute("metar",
-                DataTypeConvertor.convertDataType(metar), metar));
+        schema.getColumnEntries().add(new DatabaseColumnEntry(flightDistance.toString(), "flight_distance",
+                DataTypeConvertor.convertDataType(flightDistance)));
 
-        schema.getPayload().add(new DmtTableAttribute("flight_distance",
-                DataTypeConvertor.convertDataType(flightDistance), flightDistance.toString()));
-
-        schema.normalise();
+        normalise(schema);
         return schema;
     }
 }
