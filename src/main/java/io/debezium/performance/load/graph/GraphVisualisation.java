@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GraphVisualisation {
-    public static void drawGraph(ScenarioRequestExecutor executor) {
+    public static String drawGraph(ScenarioRequestExecutor executor) {
         List<IPlotPoint> points = new ArrayList<IPlotPoint>();
         int pos = 0;
         int maxHeight = 0;
@@ -51,16 +51,6 @@ public class GraphVisualisation {
         builder.element(new Plot(points, new Region(12, 0, roundCount + 10, maxHeight + 4)));
 
         ICanvas canvas = render.render(builder.build());
-        String s = canvas.toString();
-        FileOutputStream os = null;
-        try {
-            os = new FileOutputStream("scenario.graph");
-            byte[] strToBytes = s.getBytes();
-            os.write(strToBytes);
-            os.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        return canvas.toString();
     }
 }
