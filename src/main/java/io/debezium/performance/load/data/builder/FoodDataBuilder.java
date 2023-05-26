@@ -2,7 +2,6 @@ package io.debezium.performance.load.data.builder;
 
 import io.debezium.performance.dmt.schema.DatabaseColumnEntry;
 import io.debezium.performance.dmt.schema.DatabaseEntry;
-import io.debezium.performance.dmt.schema.DatabaseTable;
 import io.debezium.performance.load.data.DataTypeConvertor;
 import io.debezium.performance.load.data.enums.Tables;
 
@@ -17,9 +16,7 @@ public class FoodDataBuilder extends DataBuilder {
 
     @Override
     public DatabaseEntry generateDataRow(Integer idPool) {
-        DatabaseEntry schema = new DatabaseEntry(new ArrayList<>(), new DatabaseTable());
-        createId(schema, RANDOM.nextInt(idPool));
-        schema.getDatabaseTable().setName(table.toString().toLowerCase());
+        DatabaseEntry schema = createDefaultScheme(RANDOM.nextInt(idPool), table.toString().toLowerCase());
         //schema.setOperation(randomEnum(Operations.class, RANDOM).toString().toLowerCase());
 
         String dish = dataFaker.food().dish();
