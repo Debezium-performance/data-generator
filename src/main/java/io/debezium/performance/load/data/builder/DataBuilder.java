@@ -25,10 +25,9 @@ public abstract class DataBuilder {
 
 
     protected void normalise(DatabaseEntry entry) {
-        for (int i = 0; i < entry.getColumnEntries().size(); i++) {
-            DatabaseColumnEntry attr = entry.getColumnEntries().get(i);
-            if (attr.dataType().contains("VarChar")) {
-                entry.getColumnEntries().set(i, new DatabaseColumnEntry(attr.value().replace("'", " "), attr.columnName(), attr.dataType()));
+        for (DatabaseColumnEntry column : entry.getColumnEntries()) {
+            if (column.dataType().contains("VarChar")) {
+                column.setValue(column.getValue().replace("'", " "));
             }
         }
     }
@@ -44,10 +43,11 @@ public abstract class DataBuilder {
         return this.requests;
     }
 
-    protected void createId(DatabaseEntry schema, Integer value) {
-        schema.getDatabaseTable().setPrimary("id");
+    protected DatabaseEntry createDefaultScheme(Integer value, String tableName) {
+        DatabaseEntry schema = new DatabaseEntry(new ArrayList<>(), tableName, "id");
         schema.getColumnEntries().add(new DatabaseColumnEntry(value.toString(), "id",
                 DataTypeConvertor.convertDataType(value)));
+        return schema;
     }
 
     protected <T extends Enum<?>> T randomEnum(Class<T> clazz, Random random) {
