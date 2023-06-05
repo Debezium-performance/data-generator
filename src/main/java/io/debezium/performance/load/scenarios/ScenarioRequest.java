@@ -1,24 +1,26 @@
 package io.debezium.performance.load.scenarios;
 
+import okhttp3.Request;
+
 import java.net.http.HttpRequest;
 import java.util.List;
 
 public class ScenarioRequest {
     private final int batchSize;
-    private List<HttpRequest> requests;
+    private List<Request> requests;
     private Runnable wait;
 
-    public ScenarioRequest(List<HttpRequest> requests, Runnable wait) {
+    public ScenarioRequest(List<Request> requests, Runnable wait) {
         this.requests = requests;
         this.batchSize = requests.size();
         this.wait = wait;
     }
 
-    public List<HttpRequest> getRequests() {
+    public List<Request> getRequests() {
         return requests;
     }
 
-    public void setRequests(List<HttpRequest> requests) {
+    public void setRequests(List<Request> requests) {
         this.requests = requests;
     }
 

@@ -5,9 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.debezium.performance.dmt.schema.DatabaseEntry;
 import io.debezium.performance.load.scenarios.ScenarioRequestExecutor;
 import io.debezium.performance.load.scenarios.builder.ScenarioBuilder;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.time.Duration;
@@ -43,36 +48,34 @@ public class RequestBuilder<G extends ScenarioBuilder> {
         return this;
     }
 
-    private List<HttpRequest> generateRequests(List<DatabaseEntry> payloads, int rate) throws URISyntaxException, JsonProcessingException {
-        List<HttpRequest> requests = new ArrayList<>();
+    private List<Request> generateRequests(List<DatabaseEntry> payloads, int rate) throws MalformedURLException, JsonProcessingException {
+        List<Request> requests = new ArrayList<>();
         for (DatabaseEntry schema : payloads) {
 
             String serializedRequest = new ObjectMapper().writeValueAsString(schema);
 
-            requests.add(HttpRequest.newBuilder()
-                    .uri(new URI(endpoint))
+            requests.add(new Request.Builder()
+                    .url(new URL(endpoint))
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(serializedRequest))
-                    .version(HttpClient.Version.HTTP_1_1)
-                    .timeout(Duration.ofMillis(rate))
+                    .post(RequestBody.create(serializedRequest, MediaType.parse("application/json")))
                     .build());
         }
         return requests;
     }
 
-    public void buildAndExecute(int rate) throws URISyntaxException, JsonProcessingException {
+    public void buildAndExecute(int rate) throws MalformedURLException, JsonProcessingException {
         List<DatabaseEntry> payloads = dataBuilder.addRequests(maximalRowCount, requestCount).build();
-        List<HttpRequest> requests = this.generateRequests(payloads, rate);
+        List<Request> requests = this.generateRequests(payloads, rate);
         scenarioBuilder.prepareScenario(requests).run();
     }
 
-    public ScenarioRequestExecutor buildScenario(int rate) throws URISyntaxException, JsonProcessingException {
+    public ScenarioRequestExecutor buildScenario(int rate) throws MalformedURLException, JsonProcessingException {
         List<DatabaseEntry> payloads = dataBuilder.addRequests(maximalRowCount, requestCount).build();
-        List<HttpRequest> requests = this.generateRequests(payloads, rate);
+        List<Request> requests = this.generateRequests(payloads, rate);
         return scenarioBuilder.prepareScenario(requests);
     }
 
-    public List<HttpRequest> build(int rate) throws URISyntaxException, JsonProcessingException {
+    public List<Request> build(int rate) throws MalformedURLException, JsonProcessingException {
         List<DatabaseEntry> payloads = dataBuilder.addRequests(maximalRowCount, requestCount).build();
         return this.generateRequests(payloads, rate);
     }

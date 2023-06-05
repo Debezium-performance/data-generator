@@ -2,6 +2,7 @@ package io.debezium.performance.load.scenarios.builder;
 
 import io.debezium.performance.load.scenarios.ScenarioRequest;
 import io.debezium.performance.load.scenarios.ScenarioRequestExecutor;
+import okhttp3.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ public class PeakScenarioBuilder implements ScenarioBuilder {
     }
 
     @Override
-    public ScenarioRequestExecutor prepareScenario(List<HttpRequest> requestList) {
+    public ScenarioRequestExecutor prepareScenario(List<Request> requestList) {
 
         int peakRequiredCnt = peakRounds * peakLevel;
         int requestSize = requestList.size();
@@ -41,7 +42,7 @@ public class PeakScenarioBuilder implements ScenarioBuilder {
         List<ScenarioRequest> result = new ArrayList<>();
 
         for (int currentRound = 0; currentRound < (quietRounds + peakRounds); currentRound++) {
-            List<HttpRequest> batchList = new ArrayList<>();
+            List<Request> batchList = new ArrayList<>();
             if (currentRound >= peakStart && currentRound < (peakStart + peakRounds)) {
                 for (int i = 0; i < peakLevel && requestCounter < requestSize; i++) {
                     batchList.add(requestList.get(requestCounter));
