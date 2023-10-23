@@ -5,5 +5,6 @@ public enum Tables {
     ADDRESS,
     FOOD,
     AVIATION,
-    BEER
+    BEER,
+    BYTE_TABLE
 }
